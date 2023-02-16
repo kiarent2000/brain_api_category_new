@@ -25,14 +25,11 @@ class GetSubCategories
             
             $has_children=$this->check_child($child_category['categoryID']);
             
+            $parents[]=$child_category['categoryID'];
+
             if($has_children)
             {
-                
-                $parents[]=array(
-                    'parent_category_id' => $child_category['categoryID'],
-                    'level' => $i
-                );
-                
+                                
                 $child_categories=$this->getChildCategoriesByParentCategory($child_category['categoryID'], $i, $parents);
                 
                 $categories[]=array(
@@ -44,11 +41,7 @@ class GetSubCategories
                 'level' => $level
                 );
             } else {
-                $parents[]=array(
-                    'parent_category_id' => $child_category['categoryID'],
-                    'level' => $i
-                );    
-
+                
                 $categories[]=array(
                     'categoryID'=>$child_category['categoryID'],
                     'name'=>$child_category['name'],
@@ -58,10 +51,13 @@ class GetSubCategories
                     'children' => ''
                     ); 
             }    
-         }
-         
+         }         
+ 
+        
 
          }
+
+         
           
          return $categories;
     }

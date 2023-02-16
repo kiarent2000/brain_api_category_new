@@ -11,6 +11,7 @@ include(__DIR__.'/config.php');
 try
 {
   
+  /*
     $categories[] = Array ( 
     'categoryID' => 1181,
     'parentID' => 1,
@@ -27,6 +28,12 @@ try
         'categoryID' => 1182,
         'parentID' => 1181,
         'name' => 'Планшети' 
+    );
+
+    $categories[] = Array ( 
+        'categoryID' => 1187,
+        'parentID' => 1181,
+        'name' => 'Акссесуары для ноутбуков' 
     );
 
 
@@ -68,10 +75,9 @@ try
         'name' => 'модель 8810' 
     ); 
 
-    
+ */
   
-  
-    // $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
+   $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
 
  
     $main_categories = (new getMainCategories())->getMainCategoriesArray($categories, $main_categories_list); // получение массива главных категорий
@@ -107,11 +113,12 @@ try
             }
 
             echo $defis.' | id категории: '.$category_id.' название: '.$name.' level: '.$level.'  has_children: '.$has_children.'<br>';
-            
-            foreach($parents as $parent)
-            {
-                echo 'id категории:'.$category_id.' parent_id: '.$parent['parent_category_id'].' level:'.$parent['level'].'<br>'; 
 
+
+           
+            foreach($parents as $key=>$value)
+            {                
+                echo 'id категории:'.$category_id.' parent_id: '.$value.' level:'.$key.'<br>';
             }
 
 
@@ -132,18 +139,12 @@ try
 	{     
         $parent_categories=array();
         
-        
         echo '<br>#################################################################################
         <h3>id категории: '.$category['categoryID'].' название: '.$category['name'].' level: 0  </h3>';
         
-        $parent_categories[]=array(
-            'parent_category_id' => $category['categoryID'],
-            'level' => 0
-        );
+        $parent_categories[]=$category['categoryID'];
 
         $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID'], $level, $parent_categories);
-
-
         
 
         foreach($subcategories as $category_s)
