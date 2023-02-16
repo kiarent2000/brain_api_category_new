@@ -10,7 +10,7 @@ include(__DIR__.'/config.php');
 
 try
 {
-  
+  /*
   
     $categories[] = Array ( 
     'categoryID' => 1181,
@@ -75,7 +75,7 @@ try
         'name' => 'модель 8810' 
     ); 
 
- 
+ */
   
    $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
 
@@ -87,7 +87,7 @@ try
     function category_print($category_id, $name, $has_children, $children, $level, $parents)
         {
             
-            $level=$level+1;
+            //$level=$level+1;
             
             switch ($level)
             {
@@ -138,7 +138,7 @@ try
     foreach($main_categories as $category)
 	{     
        
-        
+        $parent_categories=array();
         echo '<br>#################################################################################
         <h3>id категории: '.$category['categoryID'].' название: '.$category['name'].' level: 0  </h3>';
         

@@ -16,6 +16,8 @@ class GetSubCategories
         $i=$level;
         ++$i;
 
+        $level++;
+
         foreach($this->all_categories as $child_category)
         {
          $child_categories=array();
@@ -25,7 +27,7 @@ class GetSubCategories
             
             $has_children=$this->check_child($child_category['categoryID']);
             
-            $parents[$i]=$child_category['categoryID'];
+            $parents[$level]=$child_category['categoryID'];
 
             if($has_children)
             {
