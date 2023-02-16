@@ -68,6 +68,38 @@ try
  
     $level=1;
 
+    function category_print($category_id, $name, $has_children, $children, $level)
+        {
+            switch ($level)
+            {
+                case 1:
+                $defis = ' - ';
+                break;
+
+                case 2:
+                $defis = ' -- ';
+                break;
+
+                case 3:
+                $defis = ' --- ';
+                break;
+
+                case 4:
+                $defis = ' ---- ';
+                break;
+            }
+
+            echo $defis.' | id категории: '.$category_id.' название: '.$name.' level: '.$level.'  has_children: '.$has_children.'<br>';
+
+            if($has_children)
+            {
+                foreach($children as $child)
+                {
+                    category_print($child['categoryID'], $child['name'], $child['has_children'], $child['children'], $child['level']); 
+                }
+            } 
+        }
+
     $sub_categories_object = new GetSubCategories($categories);
     
     $parent_categories=array();
@@ -83,6 +115,19 @@ try
         );
 
         $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID'], $level);
+
+
+        
+
+        foreach($subcategories as $category_s)
+        {
+            category_print($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level']);
+        }
+
+
+       
+
+
 
         print_r($subcategories);
 
