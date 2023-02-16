@@ -11,7 +11,7 @@ include(__DIR__.'/config.php');
 try
 {
   
-  /*
+  
     $categories[] = Array ( 
     'categoryID' => 1181,
     'parentID' => 1,
@@ -75,7 +75,7 @@ try
         'name' => 'модель 8810' 
     ); 
 
- */
+ 
   
    $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
 
@@ -137,7 +137,7 @@ try
 
     foreach($main_categories as $category)
 	{     
-        $parent_categories=array();
+       
         
         echo '<br>#################################################################################
         <h3>id категории: '.$category['categoryID'].' название: '.$category['name'].' level: 0  </h3>';
@@ -150,10 +150,52 @@ try
         foreach($subcategories as $category_s)
         {
             category_print($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level'], $category_s['parents']);
+
+           // $sub_categories_object->convertArrayToOpencartCategoryTreee($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level'], $category_s['parents']);
+
+
+            /*$prepared_categories = $sub_categories_object->convertArrayToOpencartCategoryTreee($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level'], $category_s['parents']);
+
+
+
+            
+            foreach($prepared_categories as $prepared_category)
+            {
+                echo '| id категории: '.$prepared_category['category_id'].' название: '.$prepared_category['name'].' level: '.$prepared_category['level'].'  has_children: '.$prepared_category['has_children'].'<br>'; 
+
+                foreach($prepared_category['path_array'] as $path_array)
+                {
+                //    echo 'id категории:'.$path_array['category_id'].' path_id: '.$path_array['path_id'].' level:'.$path_array['level'].'<br>';
+                }
+
+                echo "<br>";
+
+            }     
+
+*/
+
         }
 
 
-       
+        /*
+        $prepared_categories = $sub_categories_object->convertArrayToOpencartCategoryTreee($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level'], $category_s['parents']);
+
+            
+            foreach($prepared_categories as $prepared_category)
+            {
+                echo '| id категории: '.$prepared_category['category_id'].' название: '.$prepared_category['name'].' level: '.$prepared_category['level'].'  has_children: '.$prepared_category['has_children'].'<br>'; 
+
+                foreach($prepared_category['path_array'] as $path_array)
+                {
+                    echo 'id категории:'.$path_array['category_id'].' path_id: '.$path_array['path_id'].' level:'.$path_array['level'].'<br>';
+                }
+
+                echo "<br>";
+
+            }         
+*/
+
+
 
 
 
