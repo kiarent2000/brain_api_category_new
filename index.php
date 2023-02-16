@@ -17,23 +17,11 @@ try
     'name' => 'Ноутбуки, планшети' 
     );
 
-    $categories[] = Array ( 
-        'categoryID' => 1513,
-        'parentID' => 1,
-        'name' => 'Телефони' 
-        );
+  
     
-    $categories[] = Array ( 
-            'categoryID' => 1514,
-            'parentID' => 1513,
-            'name' => 'Нокія' 
-        ); 
+   
         
-    $categories[] = Array ( 
-            'categoryID' => 1515,
-            'parentID' => 1514,
-            'name' => 'модель 8810' 
-    );     
+        
 
     $categories[] = Array ( 
         'categoryID' => 1182,
@@ -49,16 +37,38 @@ try
     );
 
     $categories[] = Array ( 
+        'categoryID' => 1185,
+        'parentID' => 1184,
+        'name' => 'черный' 
+    );
+
+
+    $categories[] = Array ( 
         'categoryID' => 1184,
         'parentID' => 1183,
         'name' => '15 дюймів' 
     );
 
     $categories[] = Array ( 
-        'categoryID' => 1185,
-        'parentID' => 1184,
-        'name' => 'черный' 
-    );
+        'categoryID' => 1513,
+        'parentID' => 1,
+        'name' => 'Телефони' 
+        );
+
+    $categories[] = Array ( 
+            'categoryID' => 1514,
+            'parentID' => 1513,
+            'name' => 'Нокія' 
+    ); 
+
+
+    $categories[] = Array ( 
+        'categoryID' => 1515,
+        'parentID' => 1514,
+        'name' => 'модель 8810' 
+    ); 
+
+    
   
   
     // $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
@@ -66,46 +76,63 @@ try
  
     $main_categories = (new getMainCategories())->getMainCategoriesArray($categories, $main_categories_list); // получение массива главных категорий
  
-    $level=1;
+    $level=0;
 
-    function category_print($category_id, $name, $has_children, $children, $level)
+    function category_print($category_id, $name, $has_children, $children, $level, $parents)
         {
+            
+            $level=$level+1;
+            
             switch ($level)
             {
-                case 1:
+                case 0:
                 $defis = ' - ';
                 break;
 
-                case 2:
+                case 1:
                 $defis = ' -- ';
                 break;
 
-                case 3:
+                case 2:
                 $defis = ' --- ';
                 break;
 
-                case 4:
+                case 3:
                 $defis = ' ---- ';
+                break;
+
+                case 4:
+                $defis = ' ----- ';
                 break;
             }
 
             echo $defis.' | id категории: '.$category_id.' название: '.$name.' level: '.$level.'  has_children: '.$has_children.'<br>';
+            
+            foreach($parents as $parent)
+            {
+                echo 'id категории:'.$category_id.' parent_id: '.$parent['parent_category_id'].' level:'.$parent['level'].'<br>'; 
+
+            }
+
 
             if($has_children)
             {
                 foreach($children as $child)
                 {
-                    category_print($child['categoryID'], $child['name'], $child['has_children'], $child['children'], $child['level']); 
+                    category_print($child['categoryID'], $child['name'], $child['has_children'], $child['children'], $child['level'], $child['parents']); 
                 }
             } 
         }
 
     $sub_categories_object = new GetSubCategories($categories);
     
-    $parent_categories=array();
+    
 
     foreach($main_categories as $category)
 	{     
+        $parent_categories=array();
+        
+        
         echo '<br>#################################################################################
         <h3>id категории: '.$category['categoryID'].' название: '.$category['name'].' level: 0  </h3>';
         
@@ -114,14 +141,14 @@ try
             'level' => 0
         );
 
-        $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID'], $level);
+        $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID'], $level, $parent_categories);
 
 
         
 
         foreach($subcategories as $category_s)
         {
-            category_print($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level']);
+            category_print($category_s['categoryID'], $category_s['name'], $category_s['has_children'], $category_s['children'], $category_s['level'], $category_s['parents']);
         }
 
 
@@ -129,7 +156,7 @@ try
 
 
 
-        print_r($subcategories);
+      //  print_r($subcategories);
 
        /*
        
