@@ -25,7 +25,7 @@ class GetSubCategories
             
             $has_children=$this->check_child($child_category['categoryID']);
             
-            $parents[]=$child_category['categoryID'];
+            $parents[$i]=$child_category['categoryID'];
 
             if($has_children)
             {
