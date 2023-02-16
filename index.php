@@ -27,7 +27,13 @@ try
             'categoryID' => 1514,
             'parentID' => 1513,
             'name' => 'Нокія' 
-        );    
+        ); 
+        
+    $categories[] = Array ( 
+            'categoryID' => 1515,
+            'parentID' => 1514,
+            'name' => 'модель 8810' 
+    );     
 
     $categories[] = Array ( 
         'categoryID' => 1182,
@@ -47,6 +53,12 @@ try
         'parentID' => 1183,
         'name' => '15 дюймів' 
     );
+
+    $categories[] = Array ( 
+        'categoryID' => 1185,
+        'parentID' => 1184,
+        'name' => 'черный' 
+    );
   
   
     // $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
@@ -54,6 +66,8 @@ try
  
     $main_categories = (new getMainCategories())->getMainCategoriesArray($categories, $main_categories_list); // получение массива главных категорий
  
+    $level=1;
+
     $sub_categories_object = new GetSubCategories($categories);
     
     $parent_categories=array();
@@ -68,7 +82,7 @@ try
             'level' => 0
         );
 
-        $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID']);
+        $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID'], $level);
 
         print_r($subcategories);
 

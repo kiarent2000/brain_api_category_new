@@ -9,10 +9,12 @@ class GetSubCategories
     }
     
     
-    public function getChildCategoriesByParentCategory($parent_category_id)
+    public function getChildCategoriesByParentCategory($parent_category_id, $level)
     {
         $categories=array();
-          
+         
+        $i=$level;
+        ++$i;
            
         foreach($this->all_categories as $child_category)
         {
@@ -26,25 +28,28 @@ class GetSubCategories
             if($has_children)
             {
                 
-                $child_categories=$this->getChildCategoriesByParentCategory($child_category['categoryID']);
+                $child_categories=$this->getChildCategoriesByParentCategory($child_category['categoryID'], $i);
                 
                 $categories[]=array(
                 'categoryID'=>$child_category['categoryID'],
                 'name'=>$child_category['name'],
                 'has_children' => $has_children,
-                'children' => $child_categories
+                'children' => $child_categories,
+                'level' => $level
                 );
             } else {
                 $categories[]=array(
                     'categoryID'=>$child_category['categoryID'],
                     'name'=>$child_category['name'],
-                    'has_children' => $has_children
+                    'has_children' => $has_children,
+                    'level' => $level
                     ); 
             }    
          }
          
 
-         } 
+         }
+          
          return $categories;
     }
     
