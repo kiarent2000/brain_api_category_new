@@ -18,6 +18,18 @@ try
     );
 
     $categories[] = Array ( 
+        'categoryID' => 1513,
+        'parentID' => 1,
+        'name' => 'Телефони' 
+        );
+    
+    $categories[] = Array ( 
+            'categoryID' => 1514,
+            'parentID' => 1513,
+            'name' => 'Нокія' 
+        );    
+
+    $categories[] = Array ( 
         'categoryID' => 1182,
         'parentID' => 1181,
         'name' => 'Планшети' 
@@ -42,7 +54,7 @@ try
  
     $main_categories = (new getMainCategories())->getMainCategoriesArray($categories, $main_categories_list); // получение массива главных категорий
  
-    $sub_categories_object = new GetSubCategories();
+    $sub_categories_object = new GetSubCategories($categories);
     
     $parent_categories=array();
 
@@ -56,10 +68,13 @@ try
             'level' => 0
         );
 
-        $subcategories=$sub_categories_object->getGetSubCategoriesArray($categories, $category['categoryID'], 1, $parent_categories);
+        $subcategories=$sub_categories_object->getChildCategoriesByParentCategory($category['categoryID']);
 
-        //print_r($subcategories);
+        print_r($subcategories);
 
+       /*
+       
+       
         foreach($subcategories as $category_s)
         {
             echo '<br><b>- id категории: '.$category_s['categoryID'].' - родительское id:  главная категория id:'.$category['categoryID'].'  название: '.$category_s['name'].' level: '.$category_s['level'].' parent level: 0 |  has_children: '.$category_s['has_children'].' </b><br>';
@@ -72,7 +87,7 @@ try
                 }
             }
         } 
-
+        */
     }
     
     
