@@ -13,10 +13,8 @@ class GetSubCategories
     {
         $categories=array();
          
-        $i=$level;
-        ++$i;
-
         $level++;
+        $i=$level;
 
         foreach($this->all_categories as $child_category)
         {
@@ -53,13 +51,8 @@ class GetSubCategories
                     'children' => ''
                     ); 
             }    
-         }         
- 
-        
-
-         }
-
-         
+         }  
+        }         
           
          return $categories;
     }
@@ -69,15 +62,60 @@ class GetSubCategories
                    
         foreach($this->all_categories as $category)
         {
-            
-            if($category['parentID']===$category_id)
-            {		
-               return true;
-            }
-            
-
-        } 
-       
+            if($category['parentID']===$category_id) return true;
+        }        
         return false;
     }
+
+    public function convertCategory($category)
+    {
+        $category_id = $category['categoryID'];
+        $name = $category['name'];
+        $has_children = $category['has_children'];
+        $children = $category['children'];
+        $level = $category['level'];
+        $parents = $category['parents'];
+
+        $defis='-';
+
+        for($level; $level>0; $level--)
+        {
+            $defis=$defis .'-';
+        }
+        
+        
+        $prepared_parents = array();
+        
+        
+        echo $defis.' | id категории: '.$category_id.' название: '.$name.' level: '.$level.'  has_children: '.$has_children.'<br>';
+ 
+        foreach($parents as $key=>$value)
+        {                
+            echo 'id категории:'.$category_id.' parent_id: '.$value.' level:'.$key.'<br>';
+
+            $prepared_parents[]=array(
+                'category_id' => $category_id,
+                'path_id' => $value,
+                'level' => $key
+            );
+        }
+
+        $opencart_category = array(
+            'category_id' => $category_id,
+            'name' => $name,
+            'has_children' => $has_children,
+            'children' => $children,
+            'level' => $level,
+            'path_array' => $prepared_parents
+        );
+
+
+        if($has_children)
+        {
+            foreach($children as $child)
+            {
+                $this->convertCategory($child); 
+            }
+        } 
+    }    
 }
