@@ -55,13 +55,11 @@ class GetSubCategories
             }    
          }  
         }         
-          
-         return $categories;
+          return $categories;
     }
     
     public function check_child($category_id) : int
     {
-                   
         foreach($this->all_categories as $category)
         {
             if($category['parentID']===$category_id) return true;
@@ -71,7 +69,6 @@ class GetSubCategories
 
     public function convertCategory($category)
     {
-        
         $category_id = $category['categoryID'];
         $name = $category['name'];
         $has_children = $category['has_children'];
@@ -80,7 +77,6 @@ class GetSubCategories
         $parents = $category['parents'];
 
         $prepared_parents = array();
-        
 
         foreach($parents as $key=>$value)
         {                
@@ -101,7 +97,6 @@ class GetSubCategories
         );
 
         $this->update->show($opencart_category);
-
 
         if($has_children)
         {
