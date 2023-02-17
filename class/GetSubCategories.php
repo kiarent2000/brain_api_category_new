@@ -40,7 +40,8 @@ class GetSubCategories
                 'has_children' => $has_children,
                 'parents' => $parents,
                 'children' => $child_categories,
-                'level' => $level
+                'level' => $level,
+                'parent' => $parent_category_id
                 );
             } else {
                 
@@ -50,7 +51,8 @@ class GetSubCategories
                     'has_children' => $has_children,
                     'parents' => $parents,
                     'level' => $level,
-                    'children' => ''
+                    'children' => '',
+                    'parent' => $parent_category_id
                     ); 
             }    
          }  
@@ -75,6 +77,7 @@ class GetSubCategories
         $children = $category['children'];
         $level = $category['level'];
         $parents = $category['parents'];
+        $parent = $category['parent'];
 
         $prepared_parents = array();
 
@@ -93,10 +96,12 @@ class GetSubCategories
             'has_children' => $has_children,
             'children' => $children,
             'level' => $level,
+            'parent' => $parent,
             'path_array' => $prepared_parents
         );
 
-        $this->update->show($opencart_category);
+        //$this->update->show($opencart_category);
+        $this->update->check($opencart_category);
 
         if($has_children)
         {
