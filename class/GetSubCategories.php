@@ -2,10 +2,12 @@
 class GetSubCategories
 {
     public $all_categories;
+    public $update;
     
     public function __construct($all_categories)
     {
         $this->all_categories=$all_categories;
+        $this->update=new UpdateCategory();
     }
     
     
@@ -69,6 +71,7 @@ class GetSubCategories
 
     public function convertCategory($category)
     {
+        
         $category_id = $category['categoryID'];
         $name = $category['name'];
         $has_children = $category['has_children'];
@@ -76,23 +79,11 @@ class GetSubCategories
         $level = $category['level'];
         $parents = $category['parents'];
 
-        $defis='-';
-
-        for($level; $level>0; $level--)
-        {
-            $defis=$defis .'-';
-        }
-        
-        
         $prepared_parents = array();
         
-        
-        echo $defis.' | id категории: '.$category_id.' название: '.$name.' level: '.$level.'  has_children: '.$has_children.'<br>';
- 
+
         foreach($parents as $key=>$value)
         {                
-            echo 'id категории:'.$category_id.' parent_id: '.$value.' level:'.$key.'<br>';
-
             $prepared_parents[]=array(
                 'category_id' => $category_id,
                 'path_id' => $value,
@@ -108,6 +99,8 @@ class GetSubCategories
             'level' => $level,
             'path_array' => $prepared_parents
         );
+
+        $this->update->show($opencart_category);
 
 
         if($has_children)

@@ -10,81 +10,13 @@ include(__DIR__.'/config.php');
 
 try
 {
-  
-  /*
-    $categories[] = Array ( 
-    'categoryID' => 1181,
-    'parentID' => 1,
-    'name' => 'Ноутбуки, планшети' 
-    );
-
-  
-    
-  
-        
-        
-
-    $categories[] = Array ( 
-        'categoryID' => 1182,
-        'parentID' => 1181,
-        'name' => 'Планшети' 
-    );
-
-    $categories[] = Array ( 
-        'categoryID' => 1187,
-        'parentID' => 1181,
-        'name' => 'Акссесуары для ноутбуков' 
-    );
-
-
-    $categories[] = Array ( 
-        'categoryID' => 1183,
-        'parentID' => 1182,
-        'name' => 'Sony' 
-    );
-
-    $categories[] = Array ( 
-        'categoryID' => 1185,
-        'parentID' => 1184,
-        'name' => 'черный' 
-    );
-
-
-    $categories[] = Array ( 
-        'categoryID' => 1184,
-        'parentID' => 1183,
-        'name' => '15 дюймів' 
-    );
-
-    $categories[] = Array ( 
-        'categoryID' => 1513,
-        'parentID' => 1,
-        'name' => 'Телефони' 
-        );
-
-    $categories[] = Array ( 
-            'categoryID' => 1514,
-            'parentID' => 1513,
-            'name' => 'Нокія' 
-    ); 
-
-
-    $categories[] = Array ( 
-        'categoryID' => 1515,
-        'parentID' => 1514,
-        'name' => 'модель 8810' 
-    ); 
-*/
-
     $categories = (new PrepareArray())->getArray(); // получение массива всех категорий
-
  
     $main_categories = (new getMainCategories())->getMainCategoriesArray($categories, $main_categories_list); // получение массива главных категорий
  
     $level=0;    
 
-    $sub_categories_object = new GetSubCategories($categories);   
-    
+    $sub_categories_object = new GetSubCategories($categories);       
 
     foreach($main_categories as $category)
 	{     
