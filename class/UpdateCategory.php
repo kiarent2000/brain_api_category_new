@@ -68,9 +68,17 @@ class UpdateCategory
         $parent = $category['parent'];
         $level = $category['level'];
 
+        $new_category=array(
+            'brain_id'=> $category_id,
+            'name'=> $name,
+            'level'=> $level,
+            'parent'=> $this->getRealPass($parent),
+        );
+        
         echo '<b>Необходимо добавить новую категорию '.$category_id.' - '.$name.' | родитель: '.$parent.'</b><br>';
         $path_array = $category['path_array'];
 
+        
 
         foreach($path_array as $path)
         {                
@@ -81,11 +89,23 @@ class UpdateCategory
         
         unset($path_array[$level]);
 
+        $prepared_path=array();
+
         foreach($path_array as $path)
         {                
             echo 'id категории:'.$this->getRealPass($path['category_id']).' path_id: '.$this->getRealPass($path['path_id']).' level:'.$path['level'].'<br>';
+
+            $prepared_path[]=array(
+                'path_id'=> $this->getRealPass($path['path_id']),
+                'level'=> $path['level'],
+            );
         } 
 
+        $new_category['prepared_path']=$prepared_path;
+
+
+
+        (new addCategory())->add($new_category);
     }
 
     public function getRealPass($brain_id)
